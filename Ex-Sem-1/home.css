@@ -1,0 +1,36 @@
+form{
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+
+}
+
+form input {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+form a input{
+    padding: 5px 5px 5px 5px;
+    background-color: greenyellow;
+}
+
+table {
+    border: 1px;
+    border-style: solid;
+}
+
+tr{
+    border: 1px;
+    border-style: solid;
+}
+
+th{
+    border: 1px;
+    border-style: solid;
+}
+
+td {
+    border: 1px;
+    border-style: solid;
+}
