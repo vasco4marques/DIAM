@@ -1,36 +1,60 @@
-form{
-    margin: 1rem;
-    display: flex;
+table,tr,th,td {
+    border: 1px;
+    border-style: solid;
+}
+table{
+    border-radius: 5px;
+}
+
+.submissão{
+    padding: 5px 15px 15px 15px;
+    border:solid;
+    border-color:black;
+    border-width: 2px;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.submissão form{
+    display:flex;
     flex-direction: column;
-
 }
 
-form input {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+.submissão form input{
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
-form a input{
+.submissão a input{
     padding: 5px 5px 5px 5px;
     background-color: greenyellow;
 }
 
-table {
-    border: 1px;
-    border-style: solid;
+.iscte{
+    margin-top:30px;
+    margin-left:10px;
+}  
+
+.iscte h3{
+    margin-left:10px;
 }
 
-tr{
-    border: 1px;
-    border-style: solid;
+.music{
+    margin: 10px 10px 10px 10px;
 }
 
-th{
-    border: 1px;
-    border-style: solid;
+.music-list{
+    list-style-type: square;
 }
 
-td {
-    border: 1px;
-    border-style: solid;
+.music-list a{
+    font-size:large;
 }
+
+.patrocionados a img {
+    margin-left:10px;
+    width: 200px;
+    height: 80px;
+}
+

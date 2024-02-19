@@ -7,43 +7,74 @@
     <title>Ex1</title>
 </head>
 <body>
-    <a href="https://iscte-iul.pt/"><img src="iscte.png" alt="logo"></a>
-    <form action="">
-        Titulo: <input type="text">
-        Descrição: <input type="text">
-        Nome: <input type="text">
-        Número: <input type="number">
-        Contacto: <input type="text">
-        Disponibilidade: <input list="horarios">
-        <datalist id="horarios">
-            <option value="9-11">
-            <option value="11-13">
-            <option value="14-16">                
-            <option value="16-18">
-        </datalist>
-        <a href="accept.html" target="_blank"><input type="button" value="Submeter"></a>
+    <h1>Bem vindo a página oficial do concurso de projetos 2023/24</h1>
+    <h2>Aqui é onde poderá submeter o seu projeto a concurso e obter informações acerca do concurso e sobre artistas patrocionados por nós</h2>
+    
+    
+    
+    <div class="submissão">
+        <h1>Submição do projeto:</h1>
+        <form action="">
+            Titulo: <input type="text">
+            Descrição: <input type="text">
+            Nome: <input type="text">
+            Número: <input type="number">
+            Contacto: <input type="text">
+            Disponibilidade: <input list="horarios">
+            <datalist id="horarios">
+                <option value="9-11">
+                <option value="11-13">
+                <option value="14-16">                
+                <option value="16-18">
+            </datalist>
+            <a href="accept.html" target="_blank"><input type="button" value="Submeter"></a>
+        </form>
+    </div>
+    
+    <div>
+        <h2>Submissões atuais:</h2>
+        <table> 
+            <tr> 
+              <th>Nome do Projeto:</th> 
+              <td>FlickFlack</td> 
+            </tr> 
+            <tr> 
+              <th>Descrição:</th> 
+              <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto, unde.</td> 
+            </tr>
+            <tr>
+                <th>Nome Criador</th>
+                <td>Maria Martim Morgado Marques</td>
+            </tr>
+            <tr>
+                <th>Contacto</th>
+                <td>963765456</td>
+            </tr>
+        </table>
         
-    </form>
+    </div>
+    <h2>Para mais informações clique <a href="informacoes.html"> aqui!</a></h2>
 
-    <table> 
-        <tr> 
-          <th>Nome do Projeto:</th> 
-          <td>FlickFlack</td> 
-        </tr> 
-        <tr> 
-          <th>Descrição:</th> 
-          <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto, unde.</td> 
-        </tr>
-        <tr>
-            <th>Nome Criador</th>
-            <td>Maria Martim Morgado Marques</td>
-        </tr>
-        <tr>
-            <th>Contacto</th>
-            <td>963765456</td>
-        </tr>
-    </table> 
+    <div class="music">
+        <h2 class="music-title">Músicas para ouvir enquanto espera pelos resultados</h2>
+        <ul class="music-list">
+            <li><a href="https://www.youtube.com/@LofiGirl">Lo-fi</a></li>
+            <li><a href="https://www.youtube.com/@SlowJ">Slow J</a></li>
+            <li><a href="https://www.youtube.com/@arcticmonkeys">Artick Monkeys</a></li>
+            <li><a href="https://www.youtube.com/watch?v=Whl9WgP-g7s">Recomendada por nós</a></li>
+        </ul>
 
+    </div>
+    
+    <div class="patrocionados">
+        <h2>Outros eventos patrocionados pelo ISCTE:</h2>
+        <a href="https://fista.iscte-iul.pt/" target="_blank"><img src="original_fista.png" alt="FISTA"></a>
+    </div>
+    
+    <div class="iscte" target="_blank">
+        <a href="https://iscte-iul.pt/"><img src="iscte.png" alt="logo"></a>
+        <figcaption>Iscte-iul, Lisboa, Portugal</figcaption>
+    </div>
 
 </body>
 </html>
