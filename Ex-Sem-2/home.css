@@ -1,0 +1,224 @@
+table,tr,th,td {
+    border: 1px;
+    border-style: solid;
+}
+table{
+    border-radius: 5px;
+}
+
+body{
+    background-color: #5ec4ff;
+    margin: 0;
+}
+
+main{
+    margin:0rem 4rem;
+    display: flex;
+    flex-direction: row-reverse ;
+    justify-content: space-between;
+}
+
+.main-content{
+    width:100%;
+}
+
+h1 {
+    text-align: center; 
+    font-size: 46px; 
+    color: #03fcc6;
+    -webkit-text-stroke: 1px black;  
+    font-family: "Monaco", monospace;
+    text-align: center;
+}
+
+.header{
+    text-align: center;
+    padding: 5px 15px 15px 15px;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.header a img{
+    width: 300px;
+    height: 90px;
+}
+
+.header h1{
+    font-size: 55px; 
+    color: #03fcc6;
+    -webkit-text-stroke: 1px black; 
+}
+
+
+.nav{
+    padding: 15px 15px 15px 15px;
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+.nav ul {
+    padding: 0;
+    list-style: none;
+    text-align: center;
+}
+
+.nav ul li{
+    font-family: "Monaco", monospace;
+    display: inline;
+    margin-right: 5em;
+    margin-left: 5em;
+}
+
+.nav a {
+    text-decoration: none; 
+    color: white; 
+    background-color: blue;
+    padding:6px 12px;
+    border-radius: 10px;
+    transition: all 0.3s;
+}
+
+.nav a:hover{
+    box-shadow:2px 4px grey;
+}
+
+
+aside { 
+    width: 30%;  
+    box-sizing: border-box; 
+    font-family: "Monaco", monospace;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+aside section{
+    background-color: rgba(255, 255, 255, 0.8);
+    border-width: 2px;
+    border-radius: 50px;
+    padding:20px;
+}
+
+.noticias ul { 
+    margin-top: 10px;
+    list-style-type: circle;
+}
+
+.noticias li {
+    margin-bottom: 10px; 
+}
+
+.patrocionados {
+    /* float: right; */
+    width: 100%; 
+    padding: 20px; 
+    box-sizing: border-box; 
+    font-family: "Monaco", monospace;
+    margin-top: 10px;
+}
+
+.patrocionados a {
+    text-decoration:none;
+    color:black;
+}
+
+.patrocionados a img {
+    margin-left:10px;
+    width: 200px;
+    height: 80px;
+}
+
+
+
+article {
+    width: 90%;
+    padding: 20px;
+    box-sizing: border-box;
+    font-family: "Monaco", monospace;
+    border-width: 2px;
+    border-radius: 50px;
+    background-color: rgba(255, 255, 255, 0.8);
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+article h2 {
+    text-align: center; 
+    font-size: 46px; 
+    color: #03fcc6;
+    -webkit-text-stroke: 1px black; 
+}
+
+
+.custom-table {
+    width: 100%;
+    margin-top: 20px; 
+}
+
+.custom-table th,
+.custom-table td {
+    padding: 10px;
+    border: 2px solid black;
+    text-align: left;
+    border-width: 2px;
+    border-radius: 50px;
+}
+
+.custom-table th:first-child,
+.custom-table td:first-child {
+    border-left: none; 
+}
+
+.custom-table th {
+    background-color: #03fcc6;
+    color: white;
+}
+
+
+.iscte{
+    margin-top:30px;
+    margin-left:10px;
+}  
+
+.iscte h3{
+    margin-left:10px;
+}
+
+.music{
+    max-width: 90%;
+    margin: 10px 0px 10px 10px;
+    padding:5px;   
+    background-color:rgba(255, 255, 255, 0.8); 
+    border-radius: 50px;
+}
+
+.music h1 {
+    font-size: 30px;
+}
+
+.music-list{
+    list-style-type: circle;
+}
+
+.music-list li{
+    margin: 20px 0px;
+}
+
+.music-list a{
+    font-size:large;
+    text-decoration: none;
+    color: black;
+    padding:5px 10px;
+    background-color: blue;
+    border-radius: 12px;
+    color:white;
+    transition:all 0.3s;
+}
+
+.music-list a:hover{
+    box-shadow:2px 4px grey;
+}
+
+footer{
+    width: 100%;
+    margin-top:10px;
+}
+
