@@ -1,0 +1,30 @@
+{% if latest_question_list %}
+<ul>
+    {% for questao in latest_question_list %}
+    <li>
+        <a href="{% url "votacao:detalhe" questao.id %}">
+            {{ questao.questao_texto}}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% if request.user.is_superuser %}
+    <a href="{% url "votacao:create-question" %}">Crie uma questão</a>
+{% endif %}
+
+
+<br>
+{% if not request.user.is_authenticated  %}
+    <a href="{% url "votacao:login" %}">LogIn</a>
+    <a href="{% url "votacao:register" %}">Register</a>
+{% else %}
+    <form method="post" action="{% url "votacao:index" %}">
+        {% csrf_token %}
+        <input type="submit" name="logout" value="LogOut">
+    </form>
+    <a href="{% url "votacao:personalInfo" %}">Your info</a>
+{% endif %}
+
+

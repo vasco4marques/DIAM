@@ -1,0 +1,16 @@
+
+
+{% if not request.user.is_authenticated %}
+    <h1>{{errorMessage}}</h1>
+    <a href="{% url "votacao:index" %}">Back</a>
+{% else %}
+    <h1>This is your own page</h1>
+    <h2>Username: {{aluno.user.username}}</h2>
+    <h2>Email: {{aluno.user.email}}</h2>
+    <h2>Course: {{aluno.curso}}</h2>
+    <h2>Grupo: {{aluno.grupo}}</h2>
+    <h2>Max Votes: {{aluno.maxVotes}}</h2>
+    <h2>Remaining Votes: {{remaining}}</h2>
+{% endif %}
+
+
