@@ -21,8 +21,10 @@ from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r'forms',FormViewSet, basename="forms")
+# router.register(r'formDetails', FormDetailView), basename="fullForm")
 
-urlpatterns = [
+urlpatterns = [ 
     path('admin/', admin.site.urls),
-    path("", include(router.urls)),
+    # path("", include(router.urls)),
+    path("formDetails/<int:pk>", FormDetailView.as_view())
 ]

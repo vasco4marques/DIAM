@@ -28,7 +28,7 @@ class form(models.Model):
     
     description = models.CharField(max_length=500)
     
-    user = models.ForeignKey(user, on_delete=models.DO_NOTHING,default=None, null=True )
+    user = models.ForeignKey(user, on_delete=models.DO_NOTHING,default=None, null=True)
     
     created_at = models.DateTimeField("data de criacao do form")
     
@@ -42,7 +42,7 @@ class question(models.Model):
         ("2","text")
     )
     
-    form = models.OneToOneField(form,on_delete=models.CASCADE)
+    form = models.ForeignKey(form,on_delete=models.CASCADE,related_name="question_list")
     
     answerType=models.CharField(max_length=300,choices=answerType_choices)
     
@@ -58,7 +58,7 @@ class answerOption(models.Model):
     
     text = models.CharField(max_length=300)
     
-    question = models.ForeignKey(question,on_delete=models.CASCADE)
+    question = models.ForeignKey(question,on_delete=models.CASCADE,related_name="answerOption_list")
     
     voteCount = models.IntegerField(default = 0)
     
