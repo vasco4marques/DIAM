@@ -41,6 +41,9 @@ class Aluno(models.Model):
     grupo = models.CharField(max_length=100)
     maxVotes=models.IntegerField(default=0)
     voteCounter=models.IntegerField(default=0)
+    hasPicture=models.BooleanField(default=False)
+    
+    
 
     def __str__(self):
         return self.user.username

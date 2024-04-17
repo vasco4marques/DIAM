@@ -1,22 +1,33 @@
-{% if errorMessage %}
-    <h1>{{errorMessage}}</h1>
-{% else %}
-    <h1>Crie novas opções</h1>
-    <h2>Opções atuais:</h2>
-    {% if opcoes %}
-        {% for opcao in opcoes %}
-            <p>-{{opcao.opcao_texto}}</p>
-        {% endfor %}
-    {% endif %}
-    <br>
+{% extends "votacao/index.html" %}
+{% block content %}
 
-    <form method="post" action="{% url "votacao:create-option" questao_id %}">
-        {% csrf_token %}
-        Opção:<input type="text" name="opcao_texto">    
-        Número de votos:<input type="number" name="votos">
-        <input type="submit" name="create-option">
-    </form>
-    <a href="{% url "votacao:detalhe" questao_id %}">Voltar para a questão</a>
-{% endif %}
+    {% if errorMessage %}
+        <h1>{{errorMessage}}</h1>
+    {% else %}
+        <h1>Crie novas opções</h1>
+        <h2>Opções atuais:</h2>
+        {% if opcoes %}
+            {% for opcao in opcoes %}
+                <p>-{{opcao.opcao_texto}}</p>
+            {% endfor %}
+        {% endif %}
+        <br>
+
+        <form method="post" action="{% url "votacao:create-option" questao_id %}">
+            {% csrf_token %}
+            Opção:<input type="text" name="opcao_texto">    
+            Número de votos:<input type="number" name="votos">
+            <input type="submit" name="create-option">
+        </form>
+        <a href="{% url "votacao:detalhe" questao_id %}">Voltar para a questão</a>
+    {% endif %}
+
+
+{% endblock content %}
+
+
+
+
+
 
 

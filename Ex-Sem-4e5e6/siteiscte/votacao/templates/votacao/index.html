@@ -1,30 +1,75 @@
-{% if latest_question_list %}
-<ul>
-    {% for questao in latest_question_list %}
-    <li>
-        <a href="{% url "votacao:detalhe" questao.id %}">
-            {{ questao.questao_texto}}
-        </a>
-    </li>
-    {% endfor %}
-</ul>
-{% endif %}
+{% load static %}
 
-{% if request.user.is_superuser %}
-    <a href="{% url "votacao:create-question" %}">Crie uma questão</a>
-{% endif %}
+<!DOCTYPE html>
+<html lang="en">
+        <head>
+            <link rel="stylesheet" type="text/css" href="{% static 'votacao/style.css' %}">
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Home</title>
+        </head>
+    <body>
+        <header>
+            <img class="logo" src="{% static 'votacao/images/iscteLogo.png' %}" alt="NotFound">
+
+            <section class="user-info">
+                <h1>{{request.user.aluno.user}}</h1>
+                {% if request.user.aluno.hasPicture %}
+                    <img src="{% static 'media/' %}{{request.user.aluno.user}}.png">
+                {% else %}
+                    <img src="{% static 'votacao/images/NoImageFound.png' %}">
+                {% endif %}
+
+            </section>
+           
+
+            <nav class="header-nav">
+                {% if not request.user.is_authenticated  %}
+                    <a href="{% url "votacao:login" %}">LogIn</a>
+                    <a href="{% url "votacao:register" %}">Register</a>
+                {% else %}
+                    <form method="post" action="{% url "votacao:index" %}">
+                        {% csrf_token %}
+                        <input class="logout" type="submit" name="logout" value="LogOut">
+                    </form>
+                    <a class="your-info" href="{% url "votacao:personalInfo" %}">Your info</a>
+                {% endif %} 
+            </nav>
+        </header>
+        
+        {% block content %}
+            <section class="questoes">
+                {% if latest_question_list %}
+                <h1>Questões Existentes</h1>
+                <ul>
+                    {% for questao in latest_question_list %}
+                    <li>
+                        <a href="{% url "votacao:detalhe" questao.id %}">
+                            {{ questao.questao_texto}}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </section>
+
+            {% if request.user.is_superuser %}
+                <a class="create-question" href="{% url "votacao:create-question" %}">Crie uma questão</a>
+            {% endif %}
+        {% endblock content %}
+    </body>
+</html>
 
 
-<br>
-{% if not request.user.is_authenticated  %}
-    <a href="{% url "votacao:login" %}">LogIn</a>
-    <a href="{% url "votacao:register" %}">Register</a>
-{% else %}
-    <form method="post" action="{% url "votacao:index" %}">
-        {% csrf_token %}
-        <input type="submit" name="logout" value="LogOut">
-    </form>
-    <a href="{% url "votacao:personalInfo" %}">Your info</a>
-{% endif %}
+
+
+
+
+
+
+
+
+
+
 
 

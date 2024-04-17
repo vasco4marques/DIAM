@@ -1,17 +1,21 @@
-{% if errorMessage %}
-    <h1>{{errorMessage}}</h1>
-{% else %}
-    <h1>Welcome</h1>
-    <h2>Register yourself down here</h2>
-{% endif %}
+{% extends "votacao/index.html" %}
+{% block content %}
+    {% if errorMessage %}
+        <h1>{{errorMessage}}</h1>
+    {% else %}
+        <h1>Welcome</h1>
+        <h2>Register yourself down here</h2>
+    {% endif %}
 
 
-<form method="post" action="{% url "votacao:register" %}">
-    {% csrf_token %}
-    username: <input type="text" name="username">
-    email: <input type="email" name="email">
-    course: <input type="text" name="curso">
-    grupo: <input type="text" name="grupo">
-    password: <input type="password" name="password">
-    <input type="submit" name="register" value="Register">
-</form>
+    <form method="post" action="{% url "votacao:register" %}">
+        {% csrf_token %}
+        username: <input type="text" name="username">
+        email: <input type="email" name="email">
+        course: <input type="text" name="curso">
+        grupo: <input type="text" name="grupo">
+        password: <input type="password" name="password">
+        <input type="submit" name="register" value="Register">
+    </form>
+{% endblock content %}
+

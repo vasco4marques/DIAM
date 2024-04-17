@@ -20,6 +20,8 @@ urlpatterns = [
     
     path("register/",views.register, name="register"),
 
-    path("info/", views.personalInfo,name="personalInfo")
+    path("info/", views.personalInfo,name="personalInfo"),
+    
+    path("updatePicture/", views.updatePicture,name="updatePicture")
 ]
 

@@ -1,0 +1,168 @@
+:root{
+    --blue: rgb(0, 81, 255);
+}
+
+a{
+    text-decoration: none;
+    color:black;
+}
+
+body{
+    background-image: linear-gradient(to bottom, white 45%, var(--blue));
+     background-attachment: fixed;
+}
+
+.create-question{
+    font-size:25px;
+}
+
+.create-question:hover{
+    text-decoration: underline;
+}
+
+
+header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4rem;
+}
+
+.logo{
+    width:350px;
+    height:100px;
+}
+
+.header-nav{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.header-nav a{
+    margin:0rem 1rem; 
+}
+
+.header-nav .logout{
+    padding:0.5rem 1rem;
+    background-color: red;
+    color:black;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+    border:none;
+}
+
+.header-nav .your-info{
+    padding: 0.5rem 1rem;
+    background-color: var(--blue);
+    color:white;
+    font-size:20px;
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+.user-info{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.user-info img{
+    width: 120px;
+    height: 120px;
+}
+
+.questoes ul li a {
+    font-size:40px;
+}
+
+.questoes ul li:hover{
+    text-decoration: underline;
+}
+
+.questoes h1{
+    font-size: 60px;
+}
+
+
+.details h1{
+    font-size:60px
+}
+
+.errorMessage{
+    font-weight: bold;
+}
+
+.details form{
+    display:flex;
+    flex-direction: column;
+}
+
+.details form * {
+    width: fit-content;
+}
+
+.options{
+    margin: 1rem 0rem;
+}
+
+.optionText{
+    font-size:40px;
+}
+
+.admin-options{
+    margin:1rem 0rem;
+}
+
+.admin-options * {
+    font-size:25px;
+}
+
+.admin-options *{
+    padding: 0.5rem 1rem;
+    background-color: var(--blue);
+    color:white;
+    font-size:20px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: none;
+}
+
+
+.detail-nav{
+    display:flex;
+    flex-direction: column;
+}
+
+.detail-nav a {
+    font-size:25px;
+}
+
+.detail-nav a:hover{
+    text-decoration: underline;
+}
+
+
+.personal-info-content{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.personal-info-content img{
+    width: 300px;
+    height: 300px;
+}
+
+.updateButton{
+    padding: 0.5rem 1rem;
+    background-color: var(--blue);
+    color:white;
+    font-size:20px;
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+

@@ -1,16 +1,35 @@
+{% extends "votacao/index.html" %}´
+{% load static %}
+{% block content %}
 
+    <section class="personal-info-content">
+        {% if not request.user.is_authenticated %}
+            <h1>{{errorMessage}}</h1>
+            <a href="{% url "votacao:index" %}">Back</a>
+        {% else %}
+            <section>
+                <h1>This is your own page</h1>
+                <h2>Username: {{aluno.user.username}}</h2>
+                <h2>Email: {{aluno.user.email}}</h2>
+                <h2>Course: {{aluno.curso}}</h2>
+                <h2>Grupo: {{aluno.grupo}}</h2>
+                <h2>Max Votes: {{aluno.maxVotes}}</h2>
+                <h2>Remaining Votes: {{remaining}}</h2>
+            </section>
+            
+            {% if request.user.aluno.hasPicture %}
+                <img src="{% static 'media/' %}{{request.user.aluno.user}}.png">
+            {% else %}
+                <img src="{% static 'votacao/images/NoImageFound.png' %}">
+            {% endif %}
+            
+            
 
-{% if not request.user.is_authenticated %}
-    <h1>{{errorMessage}}</h1>
-    <a href="{% url "votacao:index" %}">Back</a>
-{% else %}
-    <h1>This is your own page</h1>
-    <h2>Username: {{aluno.user.username}}</h2>
-    <h2>Email: {{aluno.user.email}}</h2>
-    <h2>Course: {{aluno.curso}}</h2>
-    <h2>Grupo: {{aluno.grupo}}</h2>
-    <h2>Max Votes: {{aluno.maxVotes}}</h2>
-    <h2>Remaining Votes: {{remaining}}</h2>
-{% endif %}
+        {% endif %}
+
+    </section>
+    <a class="updateButton" href="{% url "votacao:updatePicture" %}"> Update your picture</a>
+{% endblock content %}
+
 
 

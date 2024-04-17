@@ -6,6 +6,10 @@ from .models import Questao, Opcao, Aluno
 from django.utils import timezone 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.shortcuts import render 
+from django.conf import settings 
+from django.core.files.storage import FileSystemStorage 
+from django.contrib.auth.decorators  import login_required, user_passes_test
 
 
 # Create your views here.
@@ -31,6 +35,7 @@ def resultados(request, questao_id):
     return render(request, "votacao/resultados.html",{"questao":questao})
 
 
+@login_required(login_url="/votacao/login/")
 def voto(request, questao_id):
     questao= get_object_or_404(Questao, pk=questao_id) 
     
@@ -71,6 +76,10 @@ def voto(request, questao_id):
                 errorMessage="Não pode votar mais"
                 return render(request,"votacao/detalhe.html",{"questao":questao,"errorMessage":errorMessage})
 
+def isSuperUser(user):
+    return user.is_superuser
+
+@user_passes_test(isSuperUser,login_url="/votacao/login")
 def createQuestion(request):
     errorMessage=None
     if request.user.is_superuser:
@@ -84,7 +93,7 @@ def createQuestion(request):
 
     return render(request, "votacao/questao.html",{"errorMessage":errorMessage} )
 
-
+@user_passes_test(isSuperUser,login_url="/votacao/login")
 def createOption(request, questao_id):
     errorMessage=None
     if request.user.is_superuser:
@@ -147,7 +156,7 @@ def register(request):
             
     return render(request,"votacao/register.html",{"errorMessage":errorMessage})
 
-
+@login_required(login_url="/votacao/login/")
 def personalInfo(request):
     errorMessage=None
     user=request.user
@@ -158,4 +167,24 @@ def personalInfo(request):
     else:
         errorMessage="Tem de ter efetuado o LogIn para poder aceder às suas informações"
         return render(request,"votacao/personalInfo.html",{"errorMessage":errorMessage})
+
+       
+@login_required(login_url="/votacao/login/")      
+def updatePicture(request):
+    if request.method == "POST" and request.FILES["myfile"]:
+        myfile = request.FILES["myfile"]
+        fs = FileSystemStorage()
+        # Apagar a imagem anterior do sistema
+        fs.delete(str(request.user.aluno.user)+".png")
+        filename= fs.save(str(request.user.aluno.user)+".png", myfile)
+        uploaded_file_url = fs.url(filename)
+        aluno = request.user.aluno
+        aluno.hasPicture= True
+        aluno.save()
+        
+        return render(request, "votacao/updatePicture.html", {
+            "uploaded_file_url":uploaded_file_url
+        })
+    
+    return render(request, "votacao/updatePicture.html")
         

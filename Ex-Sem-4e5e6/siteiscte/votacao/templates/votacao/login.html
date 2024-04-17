@@ -1,13 +1,18 @@
-<h1>LOGIN PAGE</h1>
+{% extends "votacao/index.html" %}
+{% block content %}
+    <h1>LOGIN PAGE</h1>
 
-{% if errorMessage %}
-    <h1>{{errorMessage}}</h1>
-{% endif %}
+    {% if errorMessage %}
+        <h1>{{errorMessage}}</h1>
+    {% endif %}
 
 
-<form method="post" action="{% url "votacao:login" %}" >
-    {% csrf_token %}
-    username: <input type="text" name="username">
-    password: <input type="password" name="password">
-    <input type="submit" name="login" value="login">
-</form>
+    <form method="post" action="{% url "votacao:login" %}" >
+        {% csrf_token %}
+        username: <input type="text" name="username">
+        password: <input type="password" name="password">
+        <input type="submit" name="login" value="login">
+    </form>
+{% endblock content %}
+
+
