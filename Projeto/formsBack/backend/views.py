@@ -15,18 +15,17 @@ from rest_framework.decorators import action
 
 # Ao criar este viewset temos logo as operações que pretendemos, como o CRUD e gestão de permissões e para isso usamos o ModelViewSet. Mais diferenças nos viewset estão na página da API
 # 
+
+# Com este view set dá para ver os forms em "/forms"
+# Ver um form específico com "/forms/id"
+# Criar, editar e apagar forms
 class FormViewSet(viewsets.ModelViewSet):
     serializer_class = formSerializer
     queryset = form.objects.all()
         
-# class FullFormView(FlatMultipleModelAPIViewSet):
-#     querylist = [
-#         {'queryset': form.objects.all(),'serializer_class':formSerializer},
-#         {'queryset':question.objects.filter(),'serializer_class':questionSerializer}   
-#     ]
 
+# Form detail
 class FormDetailView(APIView):
-    
     def get(self, request, pk):
         form_instance = form.objects.get(pk=pk)
         serializer = FormSerializer(form_instance)
