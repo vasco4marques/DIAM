@@ -18,6 +18,9 @@ class user(models.Model):
     
     created_at = models.DateTimeField("data de criacao do user")
     
+    def __str__(self):
+        return self.user.username
+    
 
 
 class form(models.Model):
@@ -25,7 +28,7 @@ class form(models.Model):
     
     description = models.CharField(max_length=500)
     
-    user = models.OneToOneField(user, on_delete=models.DO_NOTHING,default=None, null=True )
+    user = models.ForeignKey(user, on_delete=models.DO_NOTHING,default=None, null=True )
     
     created_at = models.DateTimeField("data de criacao do form")
     
@@ -45,7 +48,7 @@ class question(models.Model):
     
     text = models.CharField(max_length=300) 
     
-    description = models.CharField(max_length=300,null=True)
+    description = models.CharField(max_length=300,null=True,blank=True)
     
     def __str__(self):
         return self.text
@@ -55,22 +58,27 @@ class answerOption(models.Model):
     
     text = models.CharField(max_length=300)
     
-    question = models.OneToOneField(question,on_delete=models.CASCADE)
+    question = models.ForeignKey(question,on_delete=models.CASCADE)
+    
+    voteCount = models.IntegerField(default = 0)
     
     def __str__(self):
-        return self.text + " - " + self.question.text + " - " + self.question.form.title
+        return self.text + " + " + self.question.form.title
     
 
 
 class userAnswer(models.Model):
-    
-    question = models.OneToOneField(question,on_delete=models.CASCADE)
+
+    question = models.ForeignKey(question,on_delete=models.CASCADE)
     
     form = models.ForeignKey(form, on_delete=models.CASCADE)
     
     user = models.ForeignKey(user, on_delete=models.CASCADE)
     
-    answerText = models.CharField(max_length=300, null=True)
+    answerText = models.CharField(max_length=300, null=True, blank=True)
     
     answerOption = models.ForeignKey(answerOption, on_delete=models.CASCADE)
     
+    
+    def __str__(self):
+        return str(self.user) + " -> " + self.answerOption.text + " -> " + self.answerOption.question.text + " -> " + self.form.title
