@@ -25,7 +25,7 @@ class form(models.Model):
     
     description = models.CharField(max_length=500)
     
-    user = models.OneToOneField(user, on_delete=models.DO_NOTHING)
+    user = models.OneToOneField(user, on_delete=models.DO_NOTHING,default=None, null=True )
     
     created_at = models.DateTimeField("data de criacao do form")
     
