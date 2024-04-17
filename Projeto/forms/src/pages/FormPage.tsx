@@ -12,7 +12,7 @@ export default function FormPage(){
     const { formId = "" }= useParams<string>();
 
     useEffect(()=>{
-        axios.get("http://localhost:8000/forms/"+formId+"/").then((res) => setForm(res.data))
+        axios.get("http://localhost:8000/formDetails/"+formId).then((res) => setForm(res.data))
     },[]);
 
     if(!form){
@@ -34,12 +34,52 @@ export default function FormPage(){
                 </div>
             </div>
         
-            <div>
-                <h1>{form?.title}</h1>
-                <h2>{form?.description}</h2>
+            <div className='flex flex-col w-full items-center my-5 gap-y-5'>
+                {form && form.length !== 0 ? (
+                    <div>
+                        <h1 className="text-4xl" >{form?.title}</h1>
+                        <h2 className="text-xl" >{form?.description}</h2>
+
+                        {form?.question_list && form?.question_list.length !== 0 ? (
+                                form?.question_list.map((question:any, questionId:number)=>{
+                                    return(
+                                        <div key={questionId}>
+                                                <h1>{question?.text}</h1>
+                                                {question?.answerOption_list && question?.answerOption_list.length !== 0 ? (    
+                                                    question?.answerOption_list.map((option:any,optionId:number)=> {
+                                                        return(
+                                                            question?.answerType === "1" ? (
+                                                                <div key={optionId}>
+                                                                    <input name={"option" + optionId} type="checkbox" />  
+                                                                    <label htmlFor={"option" + optionId}>{option?.text}</label>
+                                                                </div>
+                                                            ):(
+                                                                <h1>No options</h1>
+                                                            )
+                                                        )
+                                                    })
+                                                ):(
+                                                    question?.answerType=== "2" ? (
+                                                        <div key={questionId}>
+                                                            <input className="border-2 rounded-sm" name={"question" + questionId} type="text" />  
+                                                            {/* <label htmlFor={"question" + questionId}>{question?.text}</label> */}
+                                                        </div>
+                                                   ):(
+                                                    <h1>No option</h1>
+                                                   )
+                                                )}
+                                        </div>
+                                    )
+                                })
+                        ):(
+                            <h1>No questions found</h1>
+                        )}
+                    </div>
+                    ):(
+                    <h1 className="text-4xl">No Form Found</h1>
+                    )
+                }
             </div>
-        
-        
         </div>
     )
 

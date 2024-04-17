@@ -39,7 +39,7 @@ export default function Home(){
 
       <div className='m-5 flex flex-col gap-y-2'>
 
-        {forms && forms.length !== 0 ? (
+        {forms && forms.length !== 0 ? (  
           forms.map((form:any, index:number) => {
             return (
               <div key={index} className="flex flex-row justify-between bg-blue-400 border-solid rounded-xl p-5">
