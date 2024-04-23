@@ -21,6 +21,12 @@ class AnswerOptionSerializer(serializers.ModelSerializer):
         model = answerOption
         fields = ['id', 'text', 'voteCount']
 
+
+
+
+
+
+
 # Gets answers related with the question
 class QuestionSerializer(serializers.ModelSerializer):
     answerOption_list = AnswerOptionSerializer(many=True, read_only=True)

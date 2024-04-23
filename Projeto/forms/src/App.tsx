@@ -1,23 +1,25 @@
-import React from 'react';
+import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import PageNotFound from "./pages/PageNotFound";
 import FormPage from "./pages/FormPage";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
-function App(){ 
-  return(
+function App() {
+  return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route index element ={<Home />}></Route>
+          <Route index element={<Home />}></Route>
           <Route path="/form/:formId" element={<FormPage />}></Route>
-          <Route path="*" element ={<PageNotFound />} ></Route>
-
-        </Routes>        
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/register" element={<Register />}></Route>
+          <Route path="*" element={<PageNotFound />}></Route>
+        </Routes>
       </BrowserRouter>
-    
     </>
-  )
+  );
 }
 
-export default App
+export default App;

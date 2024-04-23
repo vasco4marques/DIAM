@@ -19,9 +19,15 @@ from rest_framework.decorators import action
 # Com este view set dá para ver os forms em "/forms"
 # Ver um form específico com "/forms/id"
 # Criar, editar e apagar forms
+
+
+
 class FormViewSet(viewsets.ModelViewSet):
     serializer_class = formSerializer
     queryset = form.objects.all()
+    
+    
+
         
 
 # Form detail
