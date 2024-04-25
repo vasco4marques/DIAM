@@ -1,0 +1,21 @@
+{% extends "votacao/index.html" %}
+{% block content %}
+    <section class="page">
+        <h1>LOGIN PAGE</h1>
+
+        {% if errorMessage %}
+            <h1>{{errorMessage}}</h1>
+        {% endif %}
+
+
+        <form method="post" action="{% url "votacao:login" %}" >
+            {% csrf_token %}
+            Username: <input type="text" name="username">
+            Password: <input type="password" name="password">
+            <input type="submit" name="login" value="login">
+        </form>
+        <a href="{% url "votacao:index" %}">Voltar</a>  
+    </section>
+{% endblock content %}
+
+

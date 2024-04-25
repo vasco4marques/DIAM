@@ -1,0 +1,20 @@
+{% extends "votacao/index.html" %}
+{% block content %}
+    <section class="page">
+        <h1>{{questao.questao_texto}}</h1>
+
+        <ul>
+            {% for opcao in questao.opcao_set.all %}
+            
+            <li>
+                {{opcao.opcao_texto}} -- {{opcao.votos}}
+                voto{{opcao.votos|pluralize}}
+            </li>
+            {% endfor %}
+        </ul>
+    
+        <a href="{% url "votacao:detalhe" questao.id %}">Voltar</a>
+    </section>
+{% endblock content %}
+
+

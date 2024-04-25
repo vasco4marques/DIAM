@@ -1,0 +1,37 @@
+{% extends "votacao/index.html" %}
+{% block content %}
+
+    <section class="page">
+        {% if errorMessage %}
+        <h1>{{errorMessage}}</h1>
+        {% else %}
+            <h1>Crie novas opções</h1>
+            <h2>Opções atuais:</h2>
+            <ul>
+                {% if opcoes %}
+                    {% for opcao in opcoes %}
+                    <li>{{opcao.opcao_texto}}</li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+            <br>
+
+            <form method="post" action="{% url "votacao:create-option" questao_id %}">
+                {% csrf_token %}
+                Opção:<input type="text" name="opcao_texto">    
+                Número de votos:<input type="number" name="votos">
+                <input type="submit" name="create-option">
+            </form>
+            <a href="{% url "votacao:detalhe" questao_id %}">Voltar</a>
+        {% endif %}
+    </section>
+
+
+{% endblock content %}
+
+
+
+
+
+
+

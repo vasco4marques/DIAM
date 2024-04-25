@@ -1,0 +1,19 @@
+{% extends "votacao/index.html" %}
+{% block content %}
+    <section class="questao">
+        {% if errorMessage %}
+        <h1>{{errorMessage}}</h1>
+        {% else %}
+            <h1>Crie uma nova questão</h1>
+            <form method="post" action="{% url "votacao:create-question" %}" >
+                {% csrf_token %}
+                Questão:<input type="text" name="question" >
+                <input type="submit" value="newQuestion">
+            </form>
+            <a href="{% url "votacao:index" %}">Voltar para a lista das questões</a>  
+        {% endif %}
+    </section>
+{% endblock content %}
+
+
+

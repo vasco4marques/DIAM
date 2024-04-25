@@ -1,0 +1,92 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+        <head>
+            <link rel="stylesheet" type="text/css" href="{% static 'votacao/style.css' %}">
+            <meta charset="UTF-8">
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Home</title>
+        </head>
+    <body>
+        <header>
+            <img class="logo" src="{% static 'votacao/images/iscteLogo.png' %}" alt="NotFound">
+
+            <div>
+                <nav class="header-nav">
+                    {% if not request.user.is_authenticated  %}
+                        <a href="{% url "votacao:login" %}">LogIn</a>
+                        <a href="{% url "votacao:register" %}">Register</a>
+                    {% else %}
+                        <form method="post" action="{% url "votacao:index" %}">
+                            {% csrf_token %}
+                            <input class="logout" type="submit" name="logout" value="LogOut">
+                        </form>
+                        <a class="your-info" href="{% url "votacao:personalInfo" %}">Your info</a>
+                    {% endif %} 
+                </nav>
+    
+                <section class="user-info">
+                    {% if request.user.aluno.hasPicture %}
+                    <img id="pfp" src="{% static 'media/' %}{{request.user.aluno.user}}.png">
+                    {% else %}
+                    <img id="pfp" src="{% static 'votacao/images/NoImageFound.png' %}">
+                    {% endif %}
+                    <h1 id="username">{{request.user.aluno.user}}</h1> 
+    
+                </section>
+            </div>
+                
+        </header>
+        
+        {% block content %}
+        <button id="toggle-questions">Esconder lista de Questões</button>
+            <section class="questoes page">
+                {% if latest_question_list %}
+                <h1>Questões Existentes</h1>
+                <ul>
+                    {% for questao in latest_question_list %}
+                    <li>
+                        <a href="{% url "votacao:detalhe" questao.id %}">
+                            {{ questao.questao_texto}}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% if request.user.is_superuser %}
+                    <a class="create-question" href="{% url "votacao:create-question" %}">Crie uma questão</a>
+                {% endif %}
+            </section>
+
+        {% endblock content %}
+
+
+    <script>
+    $(document).ready(function(){
+        $("#pfp").dblclick(function(){
+            $("#pfp").hide();
+        });
+    });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("#username").click(function(){
+            $("#pfp").show();
+        });
+    });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("#toggle-questions").click(function(){
+                $(".questoes").toggle();
+                var buttonText = $(this).text();
+                $(this).text(buttonText === "Mostrar lista de Questões" ? "Esconder lista de Questões" : "Mostrar lista de Questões");
+            });
+        });
+    </script>
+
+
+    </body>
+</html>

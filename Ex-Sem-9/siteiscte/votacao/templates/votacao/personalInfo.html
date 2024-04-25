@@ -1,0 +1,44 @@
+{% extends "votacao/index.html" %}
+{% load static %}
+{% block content %}
+
+    <section class="personal-info-content page">
+        {% if not request.user.is_authenticated %}
+            <h1>{{errorMessage}}</h1>
+            <a href="{% url "votacao:index" %}">Back</a>
+        {% else %}
+            
+            <div class="personal-info-options">
+                <div class="user-info">
+                    {% if request.user.aluno.hasPicture %}
+                        <img class="user-picture" src="{% static 'media/' %}{{request.user.aluno.user}}.png">
+                    {% else %}
+                        <img class="user-picture" src="{% static 'votacao/images/NoImageFound.png' %}">
+                    {% endif %}
+                    <div class="user-info-text" style="display: none;">
+                        <h1>This is your home page</h1>
+                        <p>Username: {{aluno.user.username}}</p>
+                        <p>Email: {{aluno.user.email}}</p>
+                        <p>Course: {{aluno.curso}}</p>
+                        <p>Grupo: {{aluno.grupo}}</p>
+                        <p>Max Votes: {{aluno.maxVotes}}</p>
+                        <p>Remaining Votes: {{remaining}}</p>
+                    </div>
+                </div>
+                <a class="updateButton" href="{% url "votacao:updatePicture" %}"> Update your picture</a>
+            </div>
+
+
+        {% endif %}
+
+    </section>
+
+    <script>
+    $(document).ready(function(){
+        $(".user-info").hover(function(){
+            $(this).find(".user-info-text").stop().fadeToggle();
+        });
+    });
+    </script>
+    
+{% endblock content %}
