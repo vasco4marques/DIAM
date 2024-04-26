@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from . import views
+from .views import LoginView 
 
 app_name = "votacao"
 urlpatterns = [
@@ -16,7 +17,7 @@ urlpatterns = [
 
     path("<int:questao_id>/create-option", views.createOption, name="create-option"),
     
-    path("login", views.logIn, name="login"),
+    path("login/", LoginView.as_view(), name="login"),
     
     path("register/",views.register, name="register"),
 
