@@ -46,8 +46,11 @@ class FormSerializer(serializers.ModelSerializer):
         depth = 3
 
 
+# User serializer
 
-# class questionSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = question
-#         fields = ["id", "answerType","text","form","description"]
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = user
+        fields = ['id', 'username', 'email', 'password']
+        
+        

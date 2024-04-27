@@ -25,13 +25,10 @@ class user(models.Model):
 
 class form(models.Model):
     title = models.CharField(max_length=300)
-    
     description = models.CharField(max_length=500)
-    
-    user = models.ForeignKey(user, on_delete=models.DO_NOTHING,default=None, null=True)
-    
-    created_at = models.DateTimeField("data de criacao do form")
-    
+    user = models.ForeignKey('user', on_delete=models.DO_NOTHING, default=None, null=True)
+    created_at = models.DateTimeField("data de criacao do form", auto_now_add=True)
+
     def __str__(self):
         return self.title
 

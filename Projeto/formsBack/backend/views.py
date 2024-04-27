@@ -26,16 +26,47 @@ class FormViewSet(viewsets.ModelViewSet):
     serializer_class = formSerializer
     queryset = form.objects.all()
     
-    
-
-        
-
 # Form detail
 class FormDetailView(APIView):
     def get(self, request, pk):
         form_instance = form.objects.get(pk=pk)
         serializer = FormSerializer(form_instance)
         return Response(serializer.data)
+    
+    
+# Question detail
+
+class QuestionDetailView(APIView):
+    def get(self, request, pk):
+        question_instance = question.objects.get(pk=pk)
+        serializer = QuestionSerializer(question_instance)
+        return Response(serializer.data)
+    
+# Answer detail
+
+class AnswerDetailView(APIView):
+    def get(self, request, pk):
+        answer_instance = answerOption.objects.get(pk=pk)
+        serializer = AnswerOptionSerializer(answer_instance)
+        return Response(serializer.data)
+    
+# User Answer detail
+
+class UserAnswerDetailView(APIView):
+    def get(self, request, pk):
+        user_answer_instance = userAnswer.objects.get(pk=pk)
+        serializer = AnswerOptionSerializer(user_answer_instance)
+        return Response(serializer.data)
+    
+# User detail
+
+class UserDetailView(APIView):
+    def get(self, request, pk):
+        user_instance = user.objects.get(pk=pk)
+        serializer = UserSerializer(user_instance)
+        return Response(serializer.data)
+    
+    
     
     
 

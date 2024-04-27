@@ -24,12 +24,34 @@ export default function FormPage() {
     }
   }, [formId]);
 
+  function deleteForm() {
+    if (!window.confirm('Are you sure you want to delete this form?')) return;
+    try {
+      fetch(`${BACKEND_API}/forms/${formId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then((res) => {
+        if (res.ok) {
+          alert('Form deleted successfully!');
+          navigate('/home');
+        } else {
+          alert('Failed to delete form. Please try again.');
+        }
+        //   navigate('/home');
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   if (!form) return (<Loading />);
 
   return (
     <div className="flex flex-col w-full p-[4rem] gap-y-5 rounded-xl bg-cyan-600 text-white">
       <div className="flex items-center justify-end w-full gap-4">
-        <button onClick={() => navigate('edit')} className="text-xl p-2 px-6 text-black bg-blue-500 rounded-md bg-white hover:bg-[#ddd] transition-all duration-300">✎ Edit</button>
+        <button onClick={deleteForm} className="p-2 px-6 text-xl text-white transition-all duration-300 bg-red-500 rounded-md hover:bg-red-700">Delete Form</button>
       </div>
       {form ? (
         <div className="flex flex-col justify-center gap-y-4">
