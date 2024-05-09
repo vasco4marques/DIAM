@@ -1,4 +1,3 @@
-from django.utils import timezone
 from rest_framework import serializers
 from .models import *
 from django.contrib.auth.models import User
@@ -50,12 +49,17 @@ class FormSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = user
-        fields = ['id', 'username', 'email', 'password']
+        fields = ['id', 'username', 'password']
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
-        UserProfile.objects.create(user=user, user_type='2', created_at=timezone.now())
+        UserProfile.objects.create(user=user, user_type='2')
         return user
+
+    def validate_username(self, value):
+        if User.objects.filter(username=value).exists():
+            raise serializers.ValidationError("This username is already in use.")
+        return value
 
 
