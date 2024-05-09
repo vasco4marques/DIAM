@@ -12,7 +12,7 @@ class user(models.Model):
     
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     
-    email =  models.CharField(max_length=30)
+    username =  models.CharField(max_length=30)
     
     user_type = models.CharField(max_length=30,choices = user_type_choices)
     
@@ -31,6 +31,7 @@ class form(models.Model):
 
     def __str__(self):
         return self.title
+
 
 
 class question(models.Model):
