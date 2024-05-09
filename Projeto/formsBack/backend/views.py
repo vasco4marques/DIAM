@@ -1,30 +1,43 @@
 from .models import *
 from .serializer import *
-from django.shortcuts import render,get_object_or_404
-
-from rest_framework import status, viewsets,mixins
+from rest_framework import viewsets
 from rest_framework.views import APIView
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from drf_multiple_model.views import FlatMultipleModelAPIView
-from drf_multiple_model.viewsets import FlatMultipleModelAPIViewSet
-from rest_framework.decorators import action
+from rest_framework.authtoken.models import Token
+from django.contrib.auth import authenticate
+from django.http import JsonResponse
+from rest_framework import viewsets
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
-
-# Create your views here.
-
-# Ao criar este viewset temos logo as operações que pretendemos, como o CRUD e gestão de permissões e para isso usamos o ModelViewSet. Mais diferenças nos viewset estão na página da API
-# 
+# Ao criar este viewset temos logo as operações que pretendemos, 
+# como o CRUD e gestão de permissões e para isso usamos o ModelViewSet. 
+# Mais diferenças nos viewset estão na página da API
 
 # Com este view set dá para ver os forms em "/forms"
 # Ver um form específico com "/forms/id"
 # Criar, editar e apagar forms
 
 
+from rest_framework import status
+from rest_framework.decorators import action
+from rest_framework.response import Response
+
+from rest_framework.decorators import action
 
 class FormViewSet(viewsets.ModelViewSet):
-    serializer_class = formSerializer
+    serializer_class = FormSerializer
     queryset = form.objects.all()
+
+    @action(detail=False, methods=['post'], url_path='create-form')
+    def create_form(self, request):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     
 # Form detail
 class FormDetailView(APIView):
@@ -58,16 +71,38 @@ class UserAnswerDetailView(APIView):
         serializer = AnswerOptionSerializer(user_answer_instance)
         return Response(serializer.data)
     
-# User detail
+class LoginView(APIView): 
+    def post(self, request): 
+        username = request.data.get('username') 
+        password = request.data.get('password') 
+        user = authenticate(username=username, password=password) 
+        if user: 
+            token, _ = Token.objects.get_or_create(user=user) 
+            return JsonResponse({
+                'token': token.key, 
+                'username': username,
+                'message': 'User logged in!'
+            }) 
+        else: 
+            return JsonResponse({'message': 'Credenciais inválidas'}, status=400) 
 
-class UserDetailView(APIView):
-    def get(self, request, pk):
-        user_instance = user.objects.get(pk=pk)
-        serializer = UserSerializer(user_instance)
-        return Response(serializer.data)
-    
-    
-    
+class RegisterView(APIView):
+    def post(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+
+        if not username or not password:
+            return JsonResponse({'message': 'Missing username or password'}, status=400)
+
+        if User.objects.filter(username=username).exists():
+            return JsonResponse({'message': 'Username already exists'}, status=409)
+
+        user = User.objects.create_user(username=username, password=password)
+        user.save()
+
+        return JsonResponse({
+            'message': 'User registered successfully!'
+        })
     
 
 
