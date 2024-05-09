@@ -8,6 +8,8 @@ from django.contrib.auth import authenticate
 from django.http import JsonResponse
 from rest_framework import viewsets
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
+from django.views.decorators.http import require_http_methods
 User = get_user_model()
 
 # Ao criar este viewset temos logo as operações que pretendemos, 
@@ -102,7 +104,5 @@ class RegisterView(APIView):
 
         return JsonResponse({
             'message': 'User registered successfully!'
-        })
+        }, status=201)
     
-
-
