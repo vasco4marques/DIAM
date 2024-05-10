@@ -1,3 +1,5 @@
+from rest_framework.permissions import IsAuthenticated
+
 from .models import *
 from .serializer import *
 from rest_framework import viewsets
@@ -8,8 +10,6 @@ from django.contrib.auth import authenticate
 from django.http import JsonResponse
 from rest_framework import viewsets
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import User
-from django.views.decorators.http import require_http_methods
 User = get_user_model()
 
 # Ao criar este viewset temos logo as operações que pretendemos, 
@@ -30,12 +30,13 @@ from rest_framework.decorators import action
 class FormViewSet(viewsets.ModelViewSet):
     serializer_class = FormSerializer
     queryset = form.objects.all()
+    permission_classes = [IsAuthenticated]
 
     @action(detail=False, methods=['post'], url_path='create-form')
     def create_form(self, request):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -106,3 +107,5 @@ class RegisterView(APIView):
             'message': 'User registered successfully!'
         }, status=201)
     
+
+
