@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { getUserName } from "../services/AuthService";
 import PulsingDot from "../components/PulsingDot";
 import { useNavigate } from "react-router-dom";
