@@ -6,6 +6,7 @@ from backend.views import *
 from rest_framework import routers
 
 
+
 router = routers.DefaultRouter()
 router.register(r'forms',FormViewSet, basename="forms")
 
@@ -16,5 +17,4 @@ urlpatterns = [
     path("create-form/", FormViewSet.as_view({'post': 'create_form'}), name='create-form'),
     path("login/", LoginView.as_view(), name="login"),
     path("register/", RegisterView.as_view(), name="register"),
-    path('user/<str:username>/', get_user_info, name='get_user_info'),
 ]

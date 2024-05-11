@@ -11,8 +11,8 @@ class user(models.Model):
     )
     
     user = models.OneToOneField(User,on_delete=models.CASCADE)
-    
-    username =  models.CharField(max_length=30)
+
+    #username =  models.CharField(max_length=30)
     
     user_type = models.CharField(max_length=30,choices = user_type_choices)
     
@@ -26,7 +26,7 @@ class user(models.Model):
 class form(models.Model):
     title = models.CharField(max_length=300)
     description = models.CharField(max_length=500)
-    user = models.ForeignKey('user', on_delete=models.DO_NOTHING, default=None, null=True)
+    user = models.ForeignKey('user', on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField("data de criacao do form", auto_now_add=True)
 
     def __str__(self):
