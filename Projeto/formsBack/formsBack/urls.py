@@ -20,6 +20,7 @@ router.register(r'questions',QuestionViewSet, basename="questions")
 router.register(r'options',AnswerOptionViewSet, basename="options")
 router.register(r'userAnswers',UserAnswerViewSet, basename="userAnswers")
 router.register(r'userReviews',userReviewViewSet, basename="userReviews")
+router.register(r'users', userViewSet, basename="users")
 
 urlpatterns = [ 
     path('admin/', admin.site.urls),
@@ -31,6 +32,7 @@ urlpatterns = [
     path("formPerUser/<int:pk>/", FormPerUser.as_view(), name="formPer"),
     path("formByIdActive/<int:pk>/", FormByIdActive.as_view(), name="formByIdActive"),
     path("reviewByUser/<int:pk>/", userReviewView.as_view(), name="reviewByUser"), 
+    path("userAnswersByForm/<int:pk>/", UserAnswerByForm.as_view(), name="userAnswersByForm"),
     # path("create-form/", FormViewSet.as_view({'post': 'create_form'}), name='create-form'),
     # path("edit-form/<int:pk>", FormViewSet.as_view([{'put': 'edit_form'}]), name='edit-form'),
     # path('forms/<int:user_id>/', FormListView.as_view(), name='form-list'),

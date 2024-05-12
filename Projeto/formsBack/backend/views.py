@@ -112,6 +112,13 @@ class UserAnswerDetailView(APIView):
         serializer = AnswerOptionSerializer(user_answer_instance)
         return Response(serializer.data)
     
+class UserAnswerByForm(APIView):
+    def get(self,request,pk):
+        userAnswer_list = userAnswer.objects.filter(form = pk)
+        serializer = UserAnswerSerializer(userAnswer_list, many=True)
+        return Response(serializer.data)
+
+    
 class LoginView(APIView): 
     authentication_classes = [TokenAuthentication]
     def post(self, request): 
@@ -177,3 +184,10 @@ class userReviewViewSet(viewsets.ModelViewSet):
     serializer_class = userReviewSerializer
     queryset = userReview.objects.all()
     # permission_classes = [IsAuthenticated]
+    
+    
+class userViewSet(viewsets.ModelViewSet):
+    serializer_class = ProfileSerializer
+    queryset = Profile.objects.all()
+    
+    

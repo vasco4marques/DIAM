@@ -25,11 +25,10 @@ class UserAnswerSerializer(serializers.ModelSerializer):
         model = userAnswer
         fields = ['id','question','form','user','answerText']
 
-class UserSerializer(serializers.ModelSerializer):
+class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ['id', 'username', 'password']
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ['id', 'username']
 
     def create(self, validated_data):
         user = User.objects.create_user(username=validated_data['username'], password=validated_data['password'])
