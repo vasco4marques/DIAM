@@ -16,16 +16,21 @@ from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r'forms',FormViewSet, basename="forms")
+router.register(r'questions',QuestionViewSet, basename="questions")
+router.register(r'answerOptions',AnswerOptionViewSet, basename="answerOptions")
+router.register(r'userAnswers',UserAnswerViewSet, basename="userAnswers")
+
 
 urlpatterns = [ 
     path('admin/', admin.site.urls),
     path("", include(router.urls)),
     path("formDetails/<int:pk>", FormDetailView.as_view()),
-    path("create-form/", FormViewSet.as_view({'post': 'create_form'}), name='create-form'),
-    path("login/", LoginView.as_view(), name="login"),
-    path("register/", RegisterView.as_view(), name="register"),
+    # path("create-form/", FormViewSet.as_view({'post': 'create_form'}), name='create-form'),
+    # path("edit-form/<int:pk>", FormViewSet.as_view([{'put': 'edit_form'}]), name='edit-form'),
+    # path("login/", LoginView.as_view(), name="login"),
+    # path("register/", RegisterView.as_view(), name="register"),
     # path('forms/<int:user_id>/', FormListView.as_view(), name='form-list'),
-    # path('forms/new/', FormCreateView.as_view(), name='form-create'),
+    # path('forms/new/', FormViewSet.as_view(), name='form-create'),
     # path('forms/edit/<int:pk>/', FormUpdateView.as_view(), name='form-update'),
     # path('answer/', AnswerCreateView.as_view(), name='answer-create'),
 ]

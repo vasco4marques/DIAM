@@ -27,27 +27,74 @@ from rest_framework.response import Response
 
 from rest_framework.decorators import action
 
+
 class FormViewSet(viewsets.ModelViewSet):
     serializer_class = FormSerializer
     queryset = form.objects.all()
     permission_classes = [IsAuthenticated]
 
-    @action(detail=False, methods=['post'], url_path='create-form')
-    def create_form(self, request):
-        serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(user=request.user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    # @action(detail=False, methods=['post'], url_path='create-form')
+    # def create(self, request):
+    #     serializer = self.get_serializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save(user=request.user)
+    #         serializer.create(serializer.validated_data)
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     else:
+    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+    # @action(detail = False, methods=['put'], url_path='edit-form')
+    # def update(self,request,pk):
+    #     serializer = self.get_serializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save(user=request.user)
+    #         serializer.edit(serializer.validated_data,pk)
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     else:
+    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class QuestionViewSet(viewsets.ModelViewSet):
+    serializer_class = QuestionSerializer
+    queryset = question.objects.all()
+    permission_classes = [IsAuthenticated]
+    
+    
+class AnswerOptionViewSet(viewsets.ModelViewSet):
+    serializer_class = AnswerOptionSerializer
+    queryset=answerOption.objects.all()
+    permission_classes = [IsAuthenticated]
+    
+    
+class UserAnswerViewSet(viewsets.ModelViewSet):
+    serializers_class = UserAnswerSerializer
+    queryset=userAnswer.objects.all()
+    permission_classes = [IsAuthenticated]
+    
 
     
-# Form detail
+    
+    
+    
+    
+    
+    
+    
+
+# Esta view só serve para, com um pedido ao backend, receber um form especifico e todas as questões e opções
 class FormDetailView(APIView):
     def get(self, request, pk):
         form_instance = form.objects.get(pk=pk)
-        serializer = FormSerializer(form_instance)
+        serializer = FormDetailSerializer(form_instance)
         return Response(serializer.data)
+    
+    
+    
+
+    
+  
+    
+    
     
     
 # Question detail
