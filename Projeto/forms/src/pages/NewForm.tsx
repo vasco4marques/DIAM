@@ -13,21 +13,22 @@ export enum QuestionType {
 }
 
 export interface Question {
-  _id?: string;
+  id?: string;
   type: QuestionType;
   title: string;
   description?: string;
-  isRequired?: boolean;
+  mandatory?: boolean;
   options?: string[];
 }
 
 export interface Form {
-  _id?: string
+  id?: string
   title: string;
   description?: string;
   questions: Question[];
-  isActive?: boolean;
+  active?: boolean;
   createdBy?: string;
+  created_at?: string;
 }
 
 const NewForm: React.FC = () => {
@@ -39,7 +40,7 @@ const NewForm: React.FC = () => {
   });
 
   const navigate = useNavigate()
-  
+
   const onSubmit = async () => {
     try {
       await postForms(formData);
@@ -80,7 +81,7 @@ const NewForm: React.FC = () => {
 
     if (field === "type") {
       updatedFormData.questions[index][field] = value as QuestionType;
-    } else if (field === "isRequired") {
+    } else if (field === "mandatory") {
       updatedFormData.questions[index][field] = value as boolean;
     }
     else if (field === "options") {
@@ -102,12 +103,12 @@ const NewForm: React.FC = () => {
       title: "",
       description: "",
       options: [],
-      isRequired: false,
+      mandatory: false,
     } : newQuestion = {
       type: type,
       title: "",
       description: "",
-      isRequired: false,
+      mandatory: false,
     }
 
 
@@ -170,7 +171,6 @@ const NewForm: React.FC = () => {
             handleDescriptionChange(value)
           }} />
         </div>
-
         {formData.questions.map((question, index) => (
           <div key={index} className="w-full p-4 mb-20 rounded-md shadow-md bg-trras">
             <div className="flex items-center justify-between ">
@@ -226,24 +226,22 @@ const NewForm: React.FC = () => {
               <p className="mr-4 text-gray-500">Obrigatório:</p>
               <input
                 type="checkbox"
-                checked={question.isRequired}
+                checked={question.mandatory}
                 onChange={(e) =>
-                  handleQuestionChange(index, "isRequired", e.target.checked)
+                  handleQuestionChange(index, "mandatory", e.target.checked)
                 }
               />
             </div>
           </div>
         ))}
+        <MiniMenu>
+          <ButtonAction onClick={() => addQuestion(QuestionType.MultipleChoice)}>Adcionar questão multipla escolha</ButtonAction>
+          <div className="mb-4 " />
+          <ButtonAction onClick={() => addQuestion(QuestionType.Text)}>Adcionar questão discursiva</ButtonAction>
+          <div className="mb-4 " />
+          <ButtonComponent onClick={onSubmit}>Concluir</ButtonComponent>
+        </MiniMenu>
         <hr />
-        <div className="">
-          <MiniMenu>
-            <ButtonAction onClick={() => addQuestion(QuestionType.MultipleChoice)}>Adcionar questão multipla escolha</ButtonAction>
-            <div className="mb-4 " />
-            <ButtonAction onClick={() => addQuestion(QuestionType.Text)}>Adcionar questão discursiva</ButtonAction>
-            <div className="mb-4 " />
-            <ButtonComponent onClick={onSubmit}>Concluir</ButtonComponent>
-          </MiniMenu>
-        </div>
       </div>
     </div>
   );

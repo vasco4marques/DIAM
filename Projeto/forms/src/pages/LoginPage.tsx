@@ -1,6 +1,6 @@
 
 import { useForm } from "react-hook-form";
-import { login, logout } from "../services/AuthService";
+import { login } from "../services/AuthService";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -10,7 +10,9 @@ const LoginPage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    logout()
+    if (localStorage.getItem("authToken")) {
+      navigate("/forms");
+    }
   }, []);
 
   const onSubmit = async (data: any) => {

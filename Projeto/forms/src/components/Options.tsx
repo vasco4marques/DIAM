@@ -31,7 +31,7 @@ const OptionsComponent: React.FC<Props> = ({ data, selectedOption, onChange, onD
                     />
                     <p>{option}</p>
                     { onDelete &&
-                        <button onClick={() => handleOnDelete(index)} className=" text-zinc-300 font-normal p-1 ml-4 rounded-full">
+                        <button onClick={() => handleOnDelete(index)} className="p-1 ml-4 font-normal rounded-full text-zinc-300">
                     <FaXmark/>
                     </button>}
                 </li>

@@ -14,13 +14,14 @@ import axios from "axios";
 const BACKEND_API = process.env.REACT_APP_BACKEND_API || 'http://localhost:8000';
 
 const EditForm: React.FC = () => {
-  const { id } = useParams();
+  const { id = "" } = useParams();
   const navigate = useNavigate()
   const [newOptions, setNewOptions] = useState<string[]>([]);
   const [formData, setFormData] = useState<Form>({
-    _id: "",
+    id: "",
     title: "",
     description: "",
+    active: false,
     questions: [],
   });
 
@@ -29,7 +30,12 @@ const EditForm: React.FC = () => {
       try {
         axios
           .get(`${BACKEND_API}/formDetails/${id}`)
-          .then((res) => setFormData(res.data));
+          .then((res) => {
+            setFormData({...res.data, questions: res.data.question_list.map((q: any) => {
+              const newOptions: string[] = q.options.map((o: any) => o.text)
+              return {...q, options: newOptions}})
+            });
+          });
       } catch (error) {
         console.error(error);
       }
@@ -37,7 +43,7 @@ const EditForm: React.FC = () => {
   }, [id]);
 
   const onSubmit = async () => {
-    await updateForm(formData)
+    await updateForm(formData, parseInt(id))
     navigate('/forms')
   };
 
@@ -51,10 +57,10 @@ const EditForm: React.FC = () => {
   };
 
   const handleIsActiveToggle = () => {
-    const isActive = !formData.isActive
+    const isActive = !formData.active
     setFormData(prevFormData => ({
       ...prevFormData,
-      isActive: isActive
+      active: isActive
     }));
   };
 
@@ -80,7 +86,7 @@ const EditForm: React.FC = () => {
 
     if (field === "type") {
       updatedFormData.questions[index][field] = value as QuestionType;
-    } else if (field === "isRequired") {
+    } else if (field === "mandatory") {
       updatedFormData.questions[index][field] = value as boolean;
     }
     else if (field === "options") {
@@ -102,12 +108,12 @@ const EditForm: React.FC = () => {
       title: "",
       description: "",
       options: [],
-      isRequired: false,
+      mandatory: false,
     } : newQuestion = {
       type: type,
       title: "",
       description: "",
-      isRequired: false,
+      mandatory: false,
     }
     const updatedQuestions = [...formData?.questions || []];
     updatedQuestions.push(newQuestion)
@@ -156,9 +162,9 @@ const EditForm: React.FC = () => {
 
         <h1 className="text-2xl"> Editar Formulario </h1>
         <div className="flex items-center w-full p-4">
-          <PulsingDot active={formData.isActive!} />
+          <PulsingDot active={formData.active!} />
           <div className="w-4 " />
-          <ButtonAction onClick={handleIsActiveToggle}>{formData.isActive ? "desativar" : " ativar"}</ButtonAction>
+          <ButtonAction onClick={handleIsActiveToggle}>{formData.active ? "desativar" : " ativar"}</ButtonAction>
         </div>
         <div className="flex flex-col w-full gap-4 p-4">
           <p>Titulo</p>
@@ -235,9 +241,9 @@ const EditForm: React.FC = () => {
               <p className="mr-4 text-gray-500">Obrigatório:</p>
               <input
                 type="checkbox"
-                checked={question.isRequired}
+                checked={question.mandatory}
                 onChange={(e) =>
-                  handleQuestionChange(index, "isRequired", e.target.checked)
+                  handleQuestionChange(index, "mandatory", e.target.checked)
                 }
               />
             </div>

@@ -14,15 +14,10 @@ const MiniMenu: React.FC<Props> = ({ children }) => {
   };
 
   return (
-    <div className="fixed bottom-0 right-0 p-4 z-20">
-      <IconButton onClick={toggleMenu}>
-        {menuOpen ? <FaXmark /> : <FaBars />}
-      </IconButton>
+    <div className="relative w-full">
       <div
       onClick={toggleMenu}
-        className={`fixed bottom-0 right-0 p-4 flex flex-col justify-center z-10 transition-transform duration-300 ${
-          menuOpen ? "translate-y-0 bottom-10" : "translate-y-full"
-        }`}
+        className={`p-4 flex flex-col justify-center z-10 transition-transform duration-300`}
       >
         {children}
       </div>

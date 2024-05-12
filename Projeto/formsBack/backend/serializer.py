@@ -1,40 +1,33 @@
 from rest_framework import serializers
 from .models import *
 from django.contrib.auth.models import User
-from .models import user as UserProfile
-
-
-
+from .models import Profile as UserProfile
 
 # Gets all questions
-
 
 class FormSerializer(serializers.ModelSerializer):
     class Meta:
         model = form
-        fields = ['id', 'title', 'description','user','created_at']
+        fields = ['id', 'title', 'description','user', 'active', 'created_at']
 
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = question
-        fields = ['id','form' ,'answerType', 'text', 'description']
+        fields = ['id','form' ,'type', 'title', 'mandatory', 'description']
 
 class AnswerOptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = answerOption
-        fields = ['id', 'text', 'voteCount']
-
-
-
+        fields = ['id', 'question', 'text', 'voteCount']
 
 class UserAnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = userAnswer
-        fields = ['id','question','form','user','answerText','answerOption']
+        fields = ['id','question','form','user','answerText']
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = user
+        model = Profile
         fields = ['id', 'username', 'password']
         extra_kwargs = {'password': {'write_only': True}}
 
@@ -46,11 +39,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class QuestionDetailSerializer(serializers.ModelSerializer):
-    answerOption_list = AnswerOptionSerializer(many=True, required=False)
+    options = AnswerOptionSerializer(many=True, required=False)
 
     class Meta:
         model = question
-        fields = ['id', 'answerType', 'text', 'description', 'answerOption_list']
+        fields = ['id', 'type', 'title', 'description', 'mandatory', 'options']
 
     # def create(self, validated_data):
     #     answer_options_data = validated_data.pop('answerOption_list', [])
@@ -68,7 +61,7 @@ class FormDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = form
-        fields = ['id', 'title', 'description', 'created_at', 'question_list', 'user']
+        fields = ['id', 'title', 'description', 'active', 'created_at', 'question_list', 'user']
         read_only_fields = ('user',)
 
     # def create(self, validated_data):
@@ -102,8 +95,10 @@ class FormDetailSerializer(serializers.ModelSerializer):
 
 
 
-
-# User serializer
+class userReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = userReview
+        fields = ['id','user','review','grade']
 
 
 

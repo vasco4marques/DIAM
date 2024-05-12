@@ -1,18 +1,12 @@
 
 import { useForm } from "react-hook-form";
-import { logout } from "../services/AuthService";
 import { registerUser } from "../services/RegisterService";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
 const LoginPage: React.FC = () => {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    logout()
-  }, []);
 
   const onSubmit = async (data: any) => {
     try {

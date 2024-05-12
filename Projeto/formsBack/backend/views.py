@@ -1,15 +1,17 @@
 from rest_framework.permissions import IsAuthenticated
-
+from rest_framework.authentication import TokenAuthentication
 from .models import *
 from .serializer import *
 from rest_framework import viewsets
 from rest_framework.views import APIView
-from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
 from rest_framework import viewsets
 from django.contrib.auth import get_user_model
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.decorators import action
 User = get_user_model()
 
 # Ao criar este viewset temos logo as operações que pretendemos, 
@@ -20,18 +22,10 @@ User = get_user_model()
 # Ver um form específico com "/forms/id"
 # Criar, editar e apagar forms
 
-
-from rest_framework import status
-from rest_framework.decorators import action
-from rest_framework.response import Response
-
-from rest_framework.decorators import action
-
-
 class FormViewSet(viewsets.ModelViewSet):
     serializer_class = FormSerializer
     queryset = form.objects.all()
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     # @action(detail=False, methods=['post'], url_path='create-form')
     # def create(self, request):
@@ -57,27 +51,25 @@ class FormViewSet(viewsets.ModelViewSet):
 class QuestionViewSet(viewsets.ModelViewSet):
     serializer_class = QuestionSerializer
     queryset = question.objects.all()
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     
     
 class AnswerOptionViewSet(viewsets.ModelViewSet):
     serializer_class = AnswerOptionSerializer
     queryset=answerOption.objects.all()
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     
     
 class UserAnswerViewSet(viewsets.ModelViewSet):
-    serializers_class = UserAnswerSerializer
+    serializer_class = UserAnswerSerializer
     queryset=userAnswer.objects.all()
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     
-
-    
-    
-    
-    
-    
-    
+class FormPerUser(APIView):
+    def get(self, request, pk):
+        form_list = form.objects.filter(user = pk)
+        serializer = FormDetailSerializer(form_list, many=True)
+        return Response(serializer.data)
     
     
 
@@ -89,12 +81,11 @@ class FormDetailView(APIView):
         return Response(serializer.data)
     
     
-    
-
-    
-  
-    
-    
+class FormByIdActive(APIView):
+    def get(self,request,pk):
+        form_list = form.objects.get(id = pk, active = True)
+        serializer = FormDetailSerializer(form_list)
+        return Response(serializer.data)
     
     
 # Question detail
@@ -122,15 +113,20 @@ class UserAnswerDetailView(APIView):
         return Response(serializer.data)
     
 class LoginView(APIView): 
+    authentication_classes = [TokenAuthentication]
     def post(self, request): 
         username = request.data.get('username') 
         password = request.data.get('password') 
-        user = authenticate(username=username, password=password) 
+        user = authenticate(username=username, password=password)
         if user: 
+            login(request, user) 
+            profile = Profile.objects.get(username=username)
             token, _ = Token.objects.get_or_create(user=user) 
             return JsonResponse({
                 'token': token.key, 
                 'username': username,
+                'userId': profile.id,
+                'userType': profile.user_type,
                 'message': 'User logged in!'
             }) 
         else: 
@@ -149,6 +145,9 @@ class RegisterView(APIView):
 
         user = User.objects.create_user(username=username, password=password)
         user.save()
+        
+        costumUser = Profile(user=user, username=username, user_type='Default')
+        costumUser.save()
 
         return JsonResponse({
             'message': 'User registered successfully!'
@@ -156,3 +155,25 @@ class RegisterView(APIView):
     
 
 
+class LogoutView(APIView):
+    def get(self, request):
+        print(request.user)
+        if request.user.is_authenticated:
+            request.user.auth_token.delete()
+            return Response(status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+class userReviewView(APIView):
+
+    def get(self,request,pk):
+        review = userReviewView.objects.get(user = pk)
+        serializer = userReviewSerializer(review)
+        return Response(serializer.data)
+
+
+class userReviewViewSet(viewsets.ModelViewSet):
+
+    serializer_class = userReviewSerializer
+    queryset = userReview.objects.all()
+    # permission_classes = [IsAuthenticated]

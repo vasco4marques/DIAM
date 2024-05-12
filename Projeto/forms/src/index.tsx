@@ -35,10 +35,6 @@ const router = createBrowserRouter([
         path: "/edit/:id",
         element: <PrivateRoute element={<EditForm/>}/>
       },
-      {
-        path: "/answer/:id",
-        element: <AnswerForm/>
-      },
     ]
   },
   {
@@ -52,7 +48,11 @@ const router = createBrowserRouter([
   {
     path:"/register",
     element: <RegisterPage/>
-  }
+  },
+  {
+    path: "/answer/:id",
+    element: <AnswerForm/>
+  },
 
 ]);
 
