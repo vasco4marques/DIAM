@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { ButtonAction, ButtonComponent, IconButtonAction } from "../components/Button";
-import AutoTextarea from "../components/TextArea";
-import OptionsComponent from "../components/Options";
+import { ButtonAction, ButtonComponent, IconButtonAction } from "../../components/Button";
+import AutoTextarea from "../../components/TextArea";
+import OptionsComponent from "../../components/Options";
 import { useNavigate } from "react-router-dom";
-import MiniMenu from "../components/MiniMenu";
+import MiniMenu from "../../components/MiniMenu";
 import { FaPlus, FaXmark } from "react-icons/fa6";
-import { postForms } from "../services/FormService";
+import { postForms } from "../../services/FormService";
 
 export enum QuestionType {
   Text = 0,

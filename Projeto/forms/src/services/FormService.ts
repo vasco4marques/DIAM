@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { getToken, getUserId } from "./AuthService";
-import { Form } from "../pages/NewForm";
-import { Answers } from "../pages/AnswerForm";
+import { Form } from "../pages/forms/NewForm";
+import { Answers } from "../pages/forms/AnswerForm";
 
 const API_URL = process.env.REACT_APP_BACKEND_API || "http://localhost:8000";
 
@@ -12,9 +12,12 @@ const axiosInstance = axios.create({
   },
 });
 
+// Form Get functions
+
 export const getAllForms = async (): Promise<AxiosResponse> => {
   const userId = getUserId();
   const type = localStorage.getItem("userType");
+  // Se for admin, retorna todos os forms
   if (type === "Admin") {
     const response = await axiosInstance.get("/forms/");
     return response;
@@ -33,13 +36,10 @@ export const getFormByIdActive = async (id: string): Promise<AxiosResponse> => {
   return response;
 };
 
+// Form CRUDs
+
 export const postForms = async (formData: Form): Promise<AxiosResponse> => {
   const userId = getUserId();
-  // Criar formulario com titulo e descricao
-  // Retorna o id do formulario criado
-  // Criar perguntas com o id do formulario baseado na lista de perguntas
-  // Se a pergunta tiver opcoes (for do tipo 2), criar as opcoes baseado na lista de opcoes
-
   const response = await axiosInstance.post("/forms/", {
     title: formData.title,
     description: formData.description,
@@ -85,8 +85,6 @@ export const answerForm = async (
   return;
 };
 
-// delete form function 
-
 export const deleteForm = async (id: string): Promise<AxiosResponse> => {
   const response = await axiosInstance.delete(`/forms/${id}/`);
   return response;
@@ -97,11 +95,6 @@ export const updateForm = async (
   id: number
 ): Promise<AxiosResponse> => {
   const userId = getUserId();
-  // Criar formulario com titulo e descricao
-  // Retorna o id do formulario criado
-  // Criar perguntas com o id do formulario baseado na lista de perguntas
-  // Se a pergunta tiver opcoes (for do tipo 2), criar as opcoes baseado na lista de opcoes
-
   const response = await axiosInstance.put(`/forms/${id}/`, {
     title: formData.title,
     description: formData.description,
@@ -137,3 +130,10 @@ export const updateForm = async (
   });
   return response;
 };
+
+// get answers from form id: getAnswersByFormId
+
+export const getAnswersByFormId = async (id: string): Promise<AxiosResponse> => {
+  const response = await axiosInstance.get(`/userAnswers/${id}/`);
+  return response;
+}

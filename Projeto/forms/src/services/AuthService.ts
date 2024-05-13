@@ -1,6 +1,8 @@
 import axios from "axios";
 const API_URL = process.env.REACT_APP_BACKEND_API || 'http://localhost:8000';
 
+// Auth Service Functions
+
 export const login = async (username: string, password: string): Promise<void> => {
   const response = await axios.post(`${API_URL}/login/`, {
     username,
@@ -14,6 +16,29 @@ export const login = async (username: string, password: string): Promise<void> =
   console.log(response.data)
   saveUserProprets(userId, userName, userType);
 };
+
+export const logout = async (): Promise<void> => {
+  try {
+    await axios.get(`${API_URL}/logout/`);
+    console.log("Logout successful.");
+  } catch (error) {
+    console.error("Erro ao fazer logout: ", error);
+  } finally {
+    localStorage.removeItem("userName");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("userType");
+  }
+};
+
+export const registerUser = async (username: string, password: string): Promise<void> => {
+  await axios.post(`${API_URL}/register/`, {
+    username,
+    password,
+  });
+}
+
+// Local Storage Functions
 
 const saveToken = (token: string): void => {
   localStorage.setItem("authToken", token);
@@ -39,18 +64,4 @@ export const getToken = (): string | null => {
 
 export const getUserName = (): string | null => {
   return localStorage.getItem("userName");
-};
-
-export const logout = async (): Promise<void> => {
-  try {
-    await axios.get(`${API_URL}/logout/`);
-    console.log("Logout successful.");
-  } catch (error) {
-    console.error("Erro ao fazer logout: ", error);
-  } finally {
-    localStorage.removeItem("userName");
-    localStorage.removeItem("userId");
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("userType");
-  }
 };

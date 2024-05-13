@@ -5,10 +5,10 @@ interface Props {
     data: string[] | undefined;
     selectedOption?: string | undefined;
     onChange: (value: string) => void;
-    onDelete?:(index: number) => void;
+    onDelete?: (index: number) => void;
 }
 
-const OptionsComponent: React.FC<Props> = ({ data, selectedOption, onChange, onDelete}) => {
+const OptionsComponent: React.FC<Props> = ({ data, selectedOption, onChange, onDelete }) => {
     const handleOptionChange = (option: string) => {
         onChange(option);
     };
@@ -30,10 +30,10 @@ const OptionsComponent: React.FC<Props> = ({ data, selectedOption, onChange, onD
                         onChange={() => handleOptionChange(option)}
                     />
                     <p>{option}</p>
-                    { onDelete &&
+                    {onDelete &&
                         <button onClick={() => handleOnDelete(index)} className="p-1 ml-4 font-normal rounded-full text-zinc-300">
-                    <FaXmark/>
-                    </button>}
+                            <FaXmark />
+                        </button>}
                 </li>
             ))}
         </ul>

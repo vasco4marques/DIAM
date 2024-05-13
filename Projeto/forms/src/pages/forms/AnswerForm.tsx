@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { answerForm, getFormByIdActive } from "../services/FormService";
+import { answerForm, getFormByIdActive } from "../../services/FormService";
 import { Form as FormType } from "./NewForm";
-import { ButtonComponent } from "../components/Button";
+import { ButtonComponent } from "../../components/Button";
+import Loading from "../../components/Loading";
 
 
-export interface Answar {
+export interface Answer {
   questionId: string,
   answer: string
 }
 export interface Answers {
   formId: string;
-  answers: Answar[];
+  answers: Answer[];
 }
 
 const AnswerForm: React.FC = () => {
@@ -123,7 +124,7 @@ const AnswerForm: React.FC = () => {
       </form>
     </div>
   ) : (
-    <div>Carregando...</div>
+    <Loading />
   );
 };
 

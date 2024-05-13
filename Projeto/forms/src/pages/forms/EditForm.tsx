@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import AutoTextarea from "../components/TextArea";
-import OptionsComponent from "../components/Options";
+import AutoTextarea from "../../components/TextArea";
+import OptionsComponent from "../../components/Options";
 import { useNavigate, useParams } from "react-router-dom";
-import { updateForm } from "../services/FormService";
+import { updateForm } from "../../services/FormService";
 import { Form, Question, QuestionType } from "./NewForm";
-import { ButtonAction, ButtonComponent, IconButtonAction } from "../components/Button";
-import MiniMenu from "../components/MiniMenu";
+import { ButtonAction, ButtonComponent, IconButtonAction } from "../../components/Button";
+import MiniMenu from "../../components/MiniMenu";
 import { FaPlus, FaXmark } from "react-icons/fa6";
-import PulsingDot from "../components/PulsingDot";
-import Loading from "../components/Loading";
+import PulsingDot from "../../components/PulsingDot";
+import Loading from "../../components/Loading";
 import axios from "axios";
 
 const BACKEND_API = process.env.REACT_APP_BACKEND_API || 'http://localhost:8000';
@@ -31,9 +31,11 @@ const EditForm: React.FC = () => {
         axios
           .get(`${BACKEND_API}/formDetails/${id}`)
           .then((res) => {
-            setFormData({...res.data, questions: res.data.question_list.map((q: any) => {
-              const newOptions: string[] = q.options.map((o: any) => o.text)
-              return {...q, options: newOptions}})
+            setFormData({
+              ...res.data, questions: res.data.question_list.map((q: any) => {
+                const newOptions: string[] = q.options.map((o: any) => o.text)
+                return { ...q, options: newOptions }
+              })
             });
           });
       } catch (error) {
@@ -185,7 +187,7 @@ const EditForm: React.FC = () => {
         </div>
 
         {formData && formData.questions && formData.questions.map((question, index) => (
-          <div key={index} className="w-full p-4 mb-20 rounded-md shadow-md bg-trras">
+          <div key={index} className="w-full p-4 mb-10 rounded-md shadow-md bg-trras">
             <div className="flex items-center justify-between ">
               <input
                 type="text"
@@ -250,15 +252,13 @@ const EditForm: React.FC = () => {
           </div>
         ))}
         <hr />
-        <div className="">
-          <MiniMenu>
-            <ButtonAction onClick={() => addQuestion(QuestionType.MultipleChoice)}>Adcionar questão multipla escolha</ButtonAction>
-            <div className="mb-4 " />
-            <ButtonAction onClick={() => addQuestion(QuestionType.Text)}>Adcionar questão discursiva</ButtonAction>
-            <div className="mb-4 " />
-            <ButtonComponent onClick={onSubmit}>Concluir</ButtonComponent>
-          </MiniMenu>
-        </div>
+        <MiniMenu>
+          <ButtonAction onClick={() => addQuestion(QuestionType.MultipleChoice)}>Adcionar questão multipla escolha</ButtonAction>
+          <div className="mb-4 " />
+          <ButtonAction onClick={() => addQuestion(QuestionType.Text)}>Adcionar questão discursiva</ButtonAction>
+          <div className="mb-4 " />
+          <ButtonComponent onClick={onSubmit}>Concluir</ButtonComponent>
+        </MiniMenu>
       </div>
     </div>
   )

@@ -1,19 +1,26 @@
 
 import { useForm } from "react-hook-form";
-import { registerUser } from "../services/RegisterService";
+import { login } from "../../services/AuthService";
 import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const LoginPage: React.FC = () => {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (localStorage.getItem("authToken")) {
+      navigate("/forms");
+    }
+  }, []);
+
   const onSubmit = async (data: any) => {
     try {
-      await registerUser(data.username, data.password);
+      await login(data.username, data.password);
       navigate('/forms');
     } catch (error) {
-      alert("Erro ao criar conta");
+      alert("Erro ao fazer login");
     }
   };
 
@@ -21,7 +28,7 @@ const LoginPage: React.FC = () => {
     <>
       <div className="flex flex-col items-center justify-center h-screen">
         <div className="w-full max-w-md p-10 bg-white rounded-md shadow-md">
-          <h1 className="mb-4 text-3xl font-semibold ">Registe-se</h1>
+          <h1 className="mb-4 text-3xl font-semibold ">Entre com sua conta</h1>
           <form>
             <div className="mb-4">
               <label
@@ -59,13 +66,13 @@ const LoginPage: React.FC = () => {
               className="w-full p-2 mb-6 font-bold text-white rounded-full bg-zinc-600 hover:bg-zinc-800"
               onClick={() => handleSubmit(onSubmit)()}
             >
-              Registar
+              Entrar
             </button>
           </form>
           <p className="mt-4 text-center">
-            Já possui uma conta?{" "}
+            Ainda não possui uma conta?{" "}
             <Link to="/register" className="font-medium text-zinc-600">
-              Entre aqui!
+              Registe-se já!
             </Link>
           </p>
         </div>

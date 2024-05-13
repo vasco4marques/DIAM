@@ -41,12 +41,9 @@ const AutoTextArea: React.FC<AutoTextAreaProps> = ({ placehoder, onBlur, classNa
         placeholder={placehoder}
         className="w-full p-2 bg-transparent border-2 border-black resize-none focus:outline-none"
         style={{ height }}
-        // style={{ height: val.split("\n").length - 1 > 0? Math.max(35, (val.split("\n").length) * 24) + "px" : 'auto'}}
-
         value={val}
         onChange={handleChange}
         onBlur={handleBlur}
-
       />
     </div>
   );
