@@ -17,6 +17,7 @@ import SuccessPage from "./pages/SuccessAnswerSubmition";
 import AnswersForm from "./pages/forms/ViewAnswers";
 import ReviewPage from "./pages/Review";
 import UsersPage from "./pages/Users";
+import AllReviews from "./pages/AllReviews";
 
 // Aqui, nós definimos as rotas da aplicação.
 // Cada rota é um objeto com as chaves path e element:
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
       {
         path: "/users",
         element: <PrivateRoute element={<UsersPage/>}/>
+      },
+      {
+        path: "/all-reviews",
+        element: <PrivateRoute element={<AllReviews/>}/>
       },
     ]
   },

@@ -2,16 +2,13 @@ import React, { useEffect, useState } from "react";
 import AutoTextarea from "../../components/TextArea";
 import OptionsComponent from "../../components/Options";
 import { useNavigate, useParams } from "react-router-dom";
-import { updateForm } from "../../services/FormService";
+import { getFormDetails, updateForm } from "../../services/FormService";
 import { Form, Question, QuestionType } from "./NewForm";
 import { ButtonAction, ButtonComponent, IconButtonAction } from "../../components/Button";
 import MiniMenu from "../../components/MiniMenu";
 import { FaPlus, FaXmark } from "react-icons/fa6";
 import PulsingDot from "../../components/PulsingDot";
 import Loading from "../../components/Loading";
-import axios from "axios";
-
-const BACKEND_API = process.env.REACT_APP_BACKEND_API || 'http://localhost:8000';
 
 const EditForm: React.FC = () => {
   const { id = "" } = useParams();
@@ -26,22 +23,15 @@ const EditForm: React.FC = () => {
   });
 
   useEffect(() => {
-    if (id) {
-      try {
-        axios
-          .get(`${BACKEND_API}/formDetails/${id}`)
-          .then((res) => {
-            setFormData({
-              ...res.data, questions: res.data.question_list.map((q: any) => {
-                const newOptions: string[] = q.options.map((o: any) => o.text)
-                return { ...q, options: newOptions }
-              })
-            });
-          });
-      } catch (error) {
-        console.error(error);
-      }
-    }
+    const fetchForm = async () => {
+      const res = await getFormDetails(id);
+      setFormData({...res.data, questions: res.data.question_list.map((q: any) => {
+        const newOptions: string[] = q.options.map((o: any) => o.text)
+        return {...q, options: newOptions}})
+      });
+    };
+    if (id)
+      fetchForm();
   }, [id]);
 
   const onSubmit = async () => {
@@ -213,7 +203,6 @@ const EditForm: React.FC = () => {
                 <OptionsComponent
                   data={question.options}
                   onChange={(value: string) => {
-                    console.log(value);
                   }}
                   onDelete={(optionIndex) =>
                     deleteOption(index, optionIndex)

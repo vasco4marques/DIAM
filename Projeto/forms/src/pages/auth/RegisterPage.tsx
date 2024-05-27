@@ -11,7 +11,8 @@ const LoginPage: React.FC = () => {
   const onSubmit = async (data: any) => {
     try {
       await registerUser(data.username, data.password);
-      navigate('/forms');
+      alert("Conta criada com sucesso");
+      navigate('/login');
     } catch (error) {
       alert("Erro ao criar conta");
     }
@@ -64,7 +65,7 @@ const LoginPage: React.FC = () => {
           </form>
           <p className="mt-4 text-center">
             Já possui uma conta?{" "}
-            <Link to="/register" className="font-medium text-zinc-600">
+            <Link to="/login" className="font-medium text-zinc-600">
               Entre aqui!
             </Link>
           </p>

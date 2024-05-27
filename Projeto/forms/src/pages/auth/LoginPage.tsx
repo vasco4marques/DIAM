@@ -13,12 +13,12 @@ const LoginPage: React.FC = () => {
     if (localStorage.getItem("authToken")) {
       navigate("/forms");
     }
-  }, []);
+  }, [navigate]);
 
   const onSubmit = async (data: any) => {
     try {
       await login(data.username, data.password);
-      navigate('/forms');
+      navigate("/forms");
     } catch (error) {
       alert("Erro ao fazer login");
     }

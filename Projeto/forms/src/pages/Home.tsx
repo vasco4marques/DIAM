@@ -114,9 +114,16 @@ const MyFormsPage: React.FC = () => {
           ))}
         </div>
       )}
-      <button onClick={() => navigate('/review')} className="fixed px-4 py-2 text-white bg-black rounded-full bottom-4 left-4">
-        Review website
-      </button>
+      {
+        localStorage.getItem('userType') === 'Admin' ?
+          <button onClick={() => navigate('/all-reviews')} className="fixed px-4 py-2 text-white bg-black rounded-full bottom-4 left-4">
+            Ver reviews
+          </button>
+          :
+          <button onClick={() => navigate('/review')} className="fixed px-4 py-2 text-white bg-black rounded-full bottom-4 left-4">
+            Review website
+          </button>
+      }
       {
         localStorage.getItem('userType') === 'Admin' &&
         <button onClick={() => navigate('/users')} className="fixed px-4 py-2 text-white bg-black rounded-full bottom-4 right-4">

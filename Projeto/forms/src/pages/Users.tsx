@@ -19,6 +19,11 @@ const UserList = () => {
     getUsers();
   }, []);
 
+  const getDate = (date: string) => {
+    const dateObj = new Date(date);
+    return dateObj.toLocaleString();
+  }
+
   if (loading || !users) {
     return <Loading/>;
   }
@@ -29,7 +34,7 @@ const UserList = () => {
       <ul className="pl-5 list-disc">
         {users && users.map((user:any) => (
           <li key={user.id} className="py-2">
-            <span className="font-bold capitalize">{user.username}</span> - <span>{user.user_type}</span>
+            <span className="font-bold capitalize">{user.username}</span> - <span>{user.user_type} | Criado a {getDate(user?.created_at || "")}</span>
           </li>
         ))}
       </ul>

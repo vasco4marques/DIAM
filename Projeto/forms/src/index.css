@@ -1,12 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root{
-    --pink: #E8AEB7;
-    --blue: #B8E1FF;
-    --ice-blue:#A9FFF7;
-    --blue-grey:#2E6171;
-    --pink-purple:#D7ADC2;
-}
-

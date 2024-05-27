@@ -1,4 +1,0 @@
-pip install django-rest-framework
-pip install django-cors-headers
-pip install django-rest-multiple-models
-pip install djangorestframework-simplejwt

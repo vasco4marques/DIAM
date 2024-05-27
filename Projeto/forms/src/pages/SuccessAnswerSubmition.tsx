@@ -13,7 +13,7 @@ const SuccessPage: React.FC = () => {
       <p className="mt-2 text-lg">Agradecemos o seu feedback.</p>
       <button
         onClick={() => navigate("/forms")}
-        className="p-2 mt-8 font-bold text-white rounded-full bg-zinc-600 hover:bg-zinc-800"
+        className="p-2 px-4 mt-8 font-bold text-white rounded-full bg-zinc-600 hover:bg-zinc-800"
       >
         Voltar
       </button>

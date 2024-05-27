@@ -6,7 +6,6 @@ import { Form as FormType } from "./NewForm";
 import { ButtonComponent } from "../../components/Button";
 import Loading from "../../components/Loading";
 
-
 export interface Answer {
   questionId: string,
   answer: string
@@ -23,13 +22,10 @@ const AnswerForm: React.FC = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [selectedOptions, setSelectedOptions] = useState<{ [key: string]: string }>({});
 
-
-
   useEffect(() => {
     const fetchForm = async () => {
       try {
         const res = await getFormByIdActive(id!);
-        console.log(res.data)
         setFormData({...res.data, questions: res.data.question_list.map((q: any) => {
           const newOptions: string[] = q.options.map((o: any) => o.text)
           return {...q, options: newOptions}})
@@ -63,7 +59,6 @@ const AnswerForm: React.FC = () => {
 
     };
     try {
-      console.log(newAnswer)
       await answerForm(newAnswer);
       navigate("/success");
     } catch (error) {

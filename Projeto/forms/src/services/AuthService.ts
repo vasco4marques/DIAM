@@ -1,5 +1,12 @@
 import axios from "axios";
+import axiosInstance from "./Axios";
+
 const API_URL = process.env.REACT_APP_BACKEND_API || 'http://localhost:8000';
+
+
+export const getToken = (): string | null => {
+  return localStorage.getItem("authToken");
+};
 
 // Auth Service Functions
 
@@ -13,14 +20,12 @@ export const login = async (username: string, password: string): Promise<void> =
   const userId = response.data.userId;
   const userName = response.data.username;
   const userType = response.data.userType;
-  console.log(response.data)
   saveUserProprets(userId, userName, userType);
 };
 
 export const logout = async (): Promise<void> => {
   try {
-    await axios.get(`${API_URL}/logout/`);
-    console.log("Logout successful.");
+    await axiosInstance.get(`/logout/`);
   } catch (error) {
     console.error("Erro ao fazer logout: ", error);
   } finally {
@@ -56,10 +61,6 @@ export const isAuthenticated = (): boolean => {
 
 export const getUserId = (): string | null => {
   return localStorage.getItem("userId");
-};
-
-export const getToken = (): string | null => {
-  return localStorage.getItem("authToken");
 };
 
 export const getUserName = (): string | null => {

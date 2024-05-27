@@ -1,18 +1,24 @@
-import axios from "axios";
-import { getToken } from "./AuthService";
-
-const API_URL = process.env.REACT_APP_BACKEND_API || "http://localhost:8000";
-
-const axiosInstance = axios.create({
-  baseURL: API_URL,
-  headers: {
-    Authorization: `${getToken()}`,
-  },
-});
+import { getUserId } from "./AuthService";
+import axiosInstance from "./Axios";
 
 // User Get functions - retorna todos os utilizadores na base de dados
 
 export const getAllUsers = async (): Promise<any> => {
   const response = await axiosInstance.get("/users/");
+  return response;
+};
+
+export const postReview = async (review: any): Promise<any> => {
+  const response = await axiosInstance.post("/userReviews/", {
+    review: review.review,
+    grade: review.grade,
+    user: getUserId(),
+    username: localStorage.getItem("userName"),
+  });
+  return response;
+};
+
+export const getAllReviews = async (): Promise<any> => {
+  const response = await axiosInstance.get("/userReviews/");
   return response;
 };

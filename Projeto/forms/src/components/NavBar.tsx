@@ -5,8 +5,8 @@ import { logout } from "../services/AuthService";
 const NavBar: React.FC = () => {
   const navigate = useNavigate();
 
-  function handleLogout() {
-    logout()
+  async function handleLogout() {
+    await logout()
     navigate('/login');
   }
 

@@ -198,7 +198,6 @@ const NewForm: React.FC = () => {
                 <OptionsComponent
                   data={question.options}
                   onChange={(value: string) => {
-                    console.log(value);
                   }}
                   onDelete={(optionIndex) =>
                     deleteOption(index, optionIndex)
